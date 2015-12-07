@@ -1,0 +1,22 @@
+﻿Сборка начата 07.12.2015 21:31:55.
+     1>Проект "C:\Users\dima0\documents\visual studio 2015\Projects\Hotel\Hotel\Hotel.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Hotel.pch" /Fo"Debug\\" /Fd"Debug\Hotel.pdb" /Gd /TP /analyze- /errorReport:prompt Lux.cpp MultiRoom.cpp SingleRoom.cpp
+         SingleRoom.cpp
+         MultiRoom.cpp
+         Создание кода...
+         Компиляция...
+         Lux.cpp
+         Создание кода...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"C:\Users\dima0\documents\visual studio 2015\Projects\Hotel\Debug\Hotel.lib" /NOLOGO Debug\Lux.obj
+         Debug\MultiRoom.obj
+         Debug\Room.obj
+         Debug\SingleRoom.obj
+         Debug\stdafx.obj
+         Hotel.vcxproj -> C:\Users\dima0\documents\visual studio 2015\Projects\Hotel\Debug\Hotel.lib
+     1>Сборка проекта "C:\Users\dima0\documents\visual studio 2015\Projects\Hotel\Hotel\Hotel.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:02.13

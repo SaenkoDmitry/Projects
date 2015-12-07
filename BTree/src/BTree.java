@@ -32,13 +32,14 @@ public class BTree extends Application {
         /*List < Item > description = Arrays.asList(new Item("dfsdfs"), new Item("dfsdfs dsfs"), new Item("dfsdfs fdgdsfg sefsd"));
         T.insert(7, new Field("www.github.com", "fsdfsd", description));
         T.insert(2, new Field("www.google.com", "fsdffdsfssd", description));
-        T.insert(1, new Field("www.yandex.ru", "fsdsdfsd", description));
+        T.insert(1, new Field("www.yan
+        dex.ru", "fsdsdfsd", description));
         T.insert(17, new Field("www.habrahabr.ru", "fsddsffsd", description));*/
         Gson gson = new Gson();
         jsonObject = gson.fromJson(new FileReader("KeepNote.json"), Field[].class);
         System.out.println(gsonPretty.toJson(jsonObject));
         for (int i = 0; i < jsonObject.length; i++) {
-            T.insert(jsonObject[i].hashCode(), jsonObject[i]);
+            T.insert(jsonObject[i].name.hashCode(), jsonObject[i]);
         }
         /*T.insert(8);
         T.insert(3);
@@ -71,8 +72,8 @@ public class BTree extends Application {
         response.setLayoutY(700);
 
         Button A = new Button("Add note");
-        Button B = new Button("Change note");
-        Button C = new Button("Delete note");
+        Button B = new Button("Delete note");
+        Button C = new Button("Exit");
 
         A.setLayoutX(750);
         A.setLayoutY(100);
@@ -121,8 +122,8 @@ public class BTree extends Application {
         for (int i = 0; i < jsonObject.length; i++) {
             child[iter] = new TreeItem<String>(jsonObject[i].name);
             tiRoot.getChildren().add(child[iter]);
-            Field f = T.search(jsonObject[i].hashCode());
-            child[iter].getChildren().add(new TreeItem<String>(f.date));
+            Field f = T.search(jsonObject[i].name.hashCode());
+            //child[iter].getChildren().add(new TreeItem<String>(f.date));
             for(int j = 0; j < f.description.size(); j++)
             {
                 TreeItem<String> s = new TreeItem<String>(f.description.get(j).string);
@@ -140,7 +141,7 @@ public class BTree extends Application {
                     List<Item> description = Arrays.asList(new Item(tfC.getText()));
                     TreeItem<String> tiRoot = new TreeItem("Root");
                     Field textField = new Field(tfA.getText(), tfB.getText(), description);
-                    T.insert(textField.hashCode(), textField);
+                    T.insert(textField.name.hashCode(), textField);
                     TreeItem<String> child[] = new TreeItem[jsonObject.length + 1];
                     int iter = 0;
                     jsonObject1 = new Field[jsonObject.length + 1];
@@ -153,8 +154,8 @@ public class BTree extends Application {
                     for (int i = 0; i < jsonObject.length; i++) {
                         child[iter] = new TreeItem<String>(jsonObject[i].name);
                         tiRoot.getChildren().add(child[iter]);
-                        Field f = T.search(jsonObject[i].hashCode());
-                        child[iter].getChildren().add(new TreeItem<String>(f.date));
+                        Field f = T.search(jsonObject[i].name.hashCode());
+                        //child[iter].getChildren().add(new TreeItem<String>(f.date));
                         for (int j = 0; j < f.description.size(); j++) {
                             TreeItem<String> s = new TreeItem<String>(f.description.get(j).string);
                             child[iter].getChildren().add(s);
@@ -180,7 +181,7 @@ public class BTree extends Application {
             public void handle(ActionEvent event) {
                 if(tfA.getText().length() != 0 && tfB.getText().length() == 0 && tfC.getText().length() == 0)
                 {
-
+                    T.delete(tfA.getText().hashCode());
                 }
 
             }
@@ -189,11 +190,7 @@ public class BTree extends Application {
         C.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(tfA.getText().length() != 0 && tfB.getText().length() == 0 && tfC.getText().length() == 0)
-                {
-
-                }
-
+                primaryStage.close();
             }
         });
 
@@ -213,7 +210,10 @@ public class BTree extends Application {
                                     path = tmp.getValue() + " -> " + path;
                                     tmp = tmp.getParent();
                                 }
-                                response.setText("Selection is " + newVal.getValue() + "\nComplete path is " + path + "\n");// + (T.search(newVal.getValue().hashCode())).date);
+                                String str = "";
+                                if(T.search(newVal.getValue().hashCode()) != null)
+                                    str  = T.search(newVal.getValue().hashCode()).date;
+                                response.setText("Selection is " + newVal.getValue() + "\nComplete path is " + path + "\n" + str);// + (T.search(newVal.getValue().hashCode())).date);
                             }
                         }
                     });

@@ -221,6 +221,41 @@ public class Node {
 
     public void deleteNode(int key)
     {
+        Node root = searchNodeR(this, key);
+        if(root.isleaf)
+        {
+            for (int i = 0; i < root.n; i++) {
+                if(root.keys[i] == key)
+                {
+                    for (int j = 0; j < root.n - 1; j++) {
+                        root.keys[i] = root.keys[i + 1];
+                    }
+                    root.n--;
+                }
+            }
+        }
+        else
+        {
 
+        }
+    }
+    public Node searchNodeR (Node root, int key)
+    {
+        int i = 0;
+        if(root != null) {
+            while (i <= root.n - 1 && root.keys[i] < key) {
+                i = i + 1;
+            }
+            if (i <= root.n - 1 && root.keys[i] == key) {
+                return root;
+            }
+            if (root.isleaf) {
+                return null;
+            } else {
+                return searchNodeR(root.nodes[i], key);
+            }
+        }
+        else
+            return null;
     }
 }
