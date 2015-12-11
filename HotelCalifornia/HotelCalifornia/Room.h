@@ -7,8 +7,9 @@ class Room
 {
 public:
 	virtual int getType(int number) = 0;
-	virtual int getAvailability(int number);
+	int getAvailability(int number) const;
 	virtual int getNumberOfGuest(int number) = 0;
+	virtual int getNumberOfBeds(int number) = 0;
 	virtual void getInformation(int number) = 0;
 	virtual void takeRoom(std::basic_string<char> date, int number) = 0;
 	virtual void leaveRoom() = 0;

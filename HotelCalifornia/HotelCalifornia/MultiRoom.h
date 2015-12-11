@@ -6,11 +6,13 @@ public:
 	MultiRoom();
 	MultiRoom(int rate);
 	MultiRoom(int avai, int numberOfBeds, int numberOfBusy, string date[], int num[], int r);
-	virtual int getType(int number) override;
-	virtual int getNumberOfGuest(int number) override;
-	virtual void getInformation(int number) override;
-	virtual void takeRoom(string date, int number) override;
-	virtual void leaveRoom() override;
+	int getType(int number) override;
+	int getNumberOfGuest(int number) override;
+	int getNumberOfBeds(int number) override;
+	void getInformation(int number) override;
+	void takeRoom(string date, int number) override;
+	void leaveRoom() override;
+	//void leaveRoom(int i);
 	virtual ~MultiRoom();
 private:
 	int numberOfBeds;

@@ -36,16 +36,27 @@ int SingleRoom::getNumberOfGuest(int number)
 	return 1;
 }
 
+int SingleRoom::getNumberOfBeds(int number)
+{
+	return 1;
+}
+
 void SingleRoom::getInformation(int number)
 {
-	cout << "Номер " << number << " является одноместным" << endl;
+	cout << "------------------------- " << number << " ----------------------\n";
+	cout << "Одноместный номер" << endl;
 	if (availability)
+	{
 		cout << "Номер занят" << endl;
+		cout << "Дата регистрации : " << dateOfReg << endl;
+		cout << "Число дней проживания : " << numberOfDays << endl;
+		cout << "Суточный тариф равен : " << rate << endl;
+	}
 	else
+	{
 		cout << "Номер свободен" << endl;
-	cout << "Дата регистрации : " << dateOfReg << endl;
-	cout << "Число дней проживания : " << numberOfDays << endl;
-	cout << "Суточный тариф равен : " << rate << endl;;
+		cout << "Суточный тариф равен : " << rate << endl;
+	}
 }
 
 void SingleRoom::takeRoom(string date, int number)

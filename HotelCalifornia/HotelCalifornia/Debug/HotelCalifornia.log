@@ -1,14 +1,8 @@
-﻿Сборка начата 11.12.2015 21:47:54.
+﻿Сборка начата 12.12.2015 2:04:32.
      1>Проект "c:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\HotelCalifornia\HotelCalifornia.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\HotelCalifornia.pch" /Fo"Debug\\" /Fd"Debug\HotelCalifornia.pdb" /Gd /TP /analyze- /errorReport:prompt Lux.cpp MultiRoom.cpp Room.cpp SingleRoom.cpp
-         SingleRoom.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\HotelCalifornia.pch" /Fo"Debug\\" /Fd"Debug\HotelCalifornia.pdb" /Gd /TP /analyze- /errorReport:prompt MultiRoom.cpp
          MultiRoom.cpp
-         Lux.cpp
-         Создание кода...
-         Компиляция...
-         Room.cpp
-         Создание кода...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"c:\users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\Debug\HotelCalifornia.lib" /NOLOGO Debug\Lux.obj
          Debug\MultiRoom.obj
@@ -20,4 +14,4 @@
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:03.37
+Затраченное время: 00:00:00.91
