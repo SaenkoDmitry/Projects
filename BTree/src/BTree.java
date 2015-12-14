@@ -25,6 +25,14 @@ public class BTree extends Application {
     public static Field[] jsonObject1;
     public static Tree T;
     public static TreeView<String> treeView;
+    public TextField tfA;
+    public TextField tfB;
+    public TextArea tfC;
+    public Button A, B, C;
+    Pane rootNode;
+    String pathWord;
+    MultipleSelectionModel<TreeItem<String>> tvSelModel;
+    String path;
     public static void main(String args[]) throws Exception
     {
         T = new Tree();
@@ -37,7 +45,7 @@ public class BTree extends Application {
         T.insert(17, new Field("www.habrahabr.ru", "fsddsffsd", description));*/
         Gson gson = new Gson();
         jsonObject = gson.fromJson(new FileReader("KeepNote.json"), Field[].class);
-        System.out.println(gsonPretty.toJson(jsonObject));
+        //System.out.println(gsonPretty.toJson(jsonObject));
         for (int i = 0; i < jsonObject.length; i++) {
             T.insert(jsonObject[i].name.hashCode(), jsonObject[i]);
         }
@@ -54,38 +62,106 @@ public class BTree extends Application {
         T.insert(25);
         T.insert(50);*/
         T.print();
+        int size = 50;
+        HashTable H = new HashTable(size);
+        //System.out.println(gsonPretty.toJson(jsonObject));
+        for (int i = 0; i < jsonObject.length; i++) {
+            DataItem data = new DataItem(jsonObject[i].name.hashCode(), jsonObject[i]);
+            H.insert(data);
+        }
+        H.displayTable();
         launch(args);
+    }
+    public void fileWrite()
+    {
+        TreeItem<String> child[] = new TreeItem[jsonObject.length + 1];
+        TreeItem<String> tiRoot = new TreeItem("Root");
+        int iter = 0;
+
+        for (int i = 0; i < jsonObject.length; i++) {
+            child[iter] = new TreeItem<String>(jsonObject[i].name);
+            tiRoot.getChildren().add(child[iter]);
+            Field f = T.search(jsonObject[i].name.hashCode());
+            //child[iter].getChildren().add(new TreeItem<String>(f.date));
+            if(f != null) {
+                for (int j = 0; j < f.description.size(); j++) {
+                    TreeItem<String> s = new TreeItem<String>(f.description.get(j).string);
+                    child[iter].getChildren().add(s);
+                }
+            }
+            iter++;
+        }
+        treeView.setVisible(false);
+        treeView = new TreeView<String>(tiRoot);
+        treeView.setMinSize(400, 900);
+        rootNode.getChildren().addAll(treeView);
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("KeepNote.json", false)) {
+            writer.write(gsonPretty.toJson(jsonObject));
+        } catch (IOException exc) {
+            System.out.println(exc.getMessage());
+        }
+        tvSelModel =
+                treeView.getSelectionModel();
+        treeView.setMinSize(400, 800);
+        tvSelModel.selectedItemProperty().addListener(
+                new ChangeListener<TreeItem<String>>() {
+                    @Override
+                    public void changed(ObservableValue<? extends TreeItem<String>> changed,
+                                        TreeItem<String> oldVal, TreeItem<String> newVal) {
+                        if(newVal != null)
+                        {
+                            path = newVal.getValue();
+                            pathWord = path;
+                            TreeItem<String> tmp = newVal.getParent();
+                            while(tmp != null) {
+                                path = tmp.getValue() + " -> " + path;
+                                tmp = tmp.getParent();
+                            }
+                            String str = "";
+                            if(T.search(newVal.getValue().hashCode()) != null)
+                                str  = T.search(newVal.getValue().hashCode()).date;
+                            response.setText("Selection is " + newVal.getValue() + "\nComplete path is " + path + "\n" + str);// + (T.search(newVal.getValue().hashCode())).date);
+                        }
+                    }
+                });
+        //rootNode.getChildren().addAll(treeView,response, A, B, C, tfA, tfB, tfC, response1, response2, response3);
     }
 
     Label response, response1, response2, response3;
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Notebook");
-        Pane rootNode = new Pane();
+        rootNode = new Pane();
         rootNode.setLayoutX(0);
         rootNode.setLayoutY(0);
         //rootNode.setAlignment(Pos.BASELINE_LEFT);
         Scene myScene = new Scene(rootNode, 1100, 800);
+        myScene.getStylesheets().add
+                (Tree.class.getResource("Styles.css").toExternalForm());
         primaryStage.setScene(myScene);
         response = new Label("No selection");
         response.setLayoutX(450);
         response.setLayoutY(700);
 
-        Button A = new Button("Add note");
-        Button B = new Button("Delete note");
-        Button C = new Button("Exit");
+        A = new Button("Add note");
+        B = new Button("Delete note");
+        C = new Button("Exit");
 
         A.setLayoutX(750);
         A.setLayoutY(100);
-        A.setMinWidth(110);
+        A.setMinWidth(180);
+        A.setMinHeight(50);
 
         B.setLayoutX(750);
-        B.setLayoutY(150);
-        B.setMinWidth(110);
+        B.setLayoutY(180);
+        B.setMinWidth(180);
+        B.setMinHeight(50);
 
         C.setLayoutX(750);
-        C.setLayoutY(200);
-        C.setMinWidth(110);
+        C.setLayoutY(260);
+        C.setMinWidth(180);
+        C.setMinHeight(50);
 
         response1 = new Label("Name : ");
         response1.setLayoutX(600);
@@ -99,17 +175,17 @@ public class BTree extends Application {
         response3.setLayoutX(600);
         response3.setLayoutY(500);
 
-        TextField tfA = new TextField();
+        tfA = new TextField();
         tfA.setLayoutX(750);
         tfA.setLayoutY(400);
         tfA.setPrefColumnCount(15);
 
-        TextField tfB = new TextField();
+        tfB = new TextField();
         tfB.setLayoutX(750);
         tfB.setLayoutY(450);
         tfB.setPrefColumnCount(15);
 
-        TextArea tfC = new TextArea();
+        tfC = new TextArea();
         tfC.setPrefRowCount(5);
         tfC.setPrefColumnCount(14);
         tfC.setLayoutX(750);
@@ -137,7 +213,7 @@ public class BTree extends Application {
         A.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (tfA.getText().length() != 0 && tfB.getText().length() != 0 && tfC.getText().length() != 0) {
+                if (T.search(tfA.getText().hashCode()) == null && tfA.getText().length() != 0 && tfB.getText().length() != 0 && tfC.getText().length() != 0) {
                     List<Item> description = Arrays.asList(new Item(tfC.getText()));
                     TreeItem<String> tiRoot = new TreeItem("Root");
                     Field textField = new Field(tfA.getText(), tfB.getText(), description);
@@ -150,28 +226,8 @@ public class BTree extends Application {
                     }
                     jsonObject1[jsonObject.length] = textField;
                     jsonObject = jsonObject1;
-
-                    for (int i = 0; i < jsonObject.length; i++) {
-                        child[iter] = new TreeItem<String>(jsonObject[i].name);
-                        tiRoot.getChildren().add(child[iter]);
-                        Field f = T.search(jsonObject[i].name.hashCode());
-                        //child[iter].getChildren().add(new TreeItem<String>(f.date));
-                        for (int j = 0; j < f.description.size(); j++) {
-                            TreeItem<String> s = new TreeItem<String>(f.description.get(j).string);
-                            child[iter].getChildren().add(s);
-                        }
-                        iter++;
-                    }
-                    treeView.setVisible(false);
-                    treeView = new TreeView<String>(tiRoot);
-                    treeView.setMinSize(400, 900);
-                    rootNode.getChildren().addAll(treeView);
-                    Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-                    try (FileWriter writer = new FileWriter("KeepNote.json", false)) {
-                        writer.write(gsonPretty.toJson(jsonObject));
-                    } catch (IOException exc) {
-                        System.out.println(exc.getMessage());
-                    }
+                    fileWrite();
+                    T.print();
                 }
             }
         });
@@ -179,10 +235,21 @@ public class BTree extends Application {
         B.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(tfA.getText().length() != 0 && tfB.getText().length() == 0 && tfC.getText().length() == 0)
+                if(pathWord != "" && pathWord != "Root")
                 {
-                    T.delete(tfA.getText().hashCode());
+                    T.remove(pathWord.hashCode());
+                    jsonObject1 = new Field[jsonObject.length - 1];
+                    String text = pathWord;
+                    for (int i = 0, j = 0; i < jsonObject.length; i++, j++) {
+                        if((jsonObject[i].name).compareTo(text) != 0)
+                            jsonObject1[j] = jsonObject[i];
+                        else
+                            j--;
+                    }
+                    jsonObject = jsonObject1;
                 }
+                fileWrite();
+                T.print();
 
             }
         });
@@ -194,7 +261,7 @@ public class BTree extends Application {
             }
         });
 
-        MultipleSelectionModel<TreeItem<String>> tvSelModel =
+        tvSelModel =
                 treeView.getSelectionModel();
         treeView.setMinSize(400, 800);
         tvSelModel.selectedItemProperty().addListener(
@@ -204,7 +271,8 @@ public class BTree extends Application {
                                 TreeItem<String> oldVal, TreeItem<String> newVal) {
                             if(newVal != null)
                             {
-                                String path = newVal.getValue();
+                                path = newVal.getValue();
+                                pathWord = path;
                                 TreeItem<String> tmp = newVal.getParent();
                                 while(tmp != null) {
                                     path = tmp.getValue() + " -> " + path;

@@ -180,9 +180,9 @@ public class Node {
                 while(i <= treeWidth.element().n - 1)
                 {
                     if(temp != "")
-                        temp = temp + "," + treeWidth.element().keys[i];
+                        temp = temp + "," + treeWidth.element().keys[i] + "(" + treeWidth.element().field[i].name + ")";
                     else
-                        temp = temp + treeWidth.element().keys[i];
+                        temp = temp + treeWidth.element().keys[i] + "(" + treeWidth.element().field[i].name + ")";
                     i++;
                 }
                 temp = "\n(" + temp + ")";// + "{ " + "n = " + treeWidth.element().n + ", isleaf = " + treeWidth.element().isleaf + " }";
@@ -219,26 +219,159 @@ public class Node {
             return null;
     }
 
-    public void deleteNode(int key)
-    {
-        Node root = searchNodeR(this, key);
-        if(root.isleaf)
-        {
-            for (int i = 0; i < root.n; i++) {
-                if(root.keys[i] == key)
-                {
-                    for (int j = 0; j < root.n - 1; j++) {
-                        root.keys[i] = root.keys[i + 1];
-                    }
-                    root.n--;
-                }
+    private int findKey(int x) {
+        int index = 0;
+        while(index < n && keys[index] < x)
+            ++index;
+        return index;
+    }
+    public void remove(int x) {
+        Node r = this;
+        int index = findKey(x);
+        if(index < r.n && keys[index] == x) {
+            if(r.isleaf)
+                removeFromLeaf(index);
+            else
+                removeFromNonLeaf(index);
+        } else {
+            if(r.isleaf) {
+                System.out.println("No such key in the tree.");
+                return;
             }
-        }
-        else
-        {
-
+            boolean flag = ((index == n)? true : false);
+            if(r.nodes[index].n < t)
+                fill(index);
+            if(flag && index > n)
+                r.nodes[index-1].remove(x);
+            else
+                r.nodes[index].remove(x);
         }
     }
+    private void removeFromLeaf(int index) {
+        for(int i = index+1;i < n;i++) {
+            keys[i-1] = keys[i];
+            field[i - 1] = field[i];
+        }
+        n--;
+    }
+    private void removeFromNonLeaf(int index) {
+        int k = this.keys[index];
+        if(nodes[index].n >= t) {
+            int prev = getPrev(index);
+            keys[index] = prev;
+            field[index] = getPrevF(index);
+            nodes[index].remove(prev);
+        } else if(nodes[index+1].n >= t) {
+            int succ = getSucc(index);
+            keys[index] = succ;
+            field[index] = getSuccF(index);
+            nodes[index+1].remove(succ);
+        } else {
+            merge(index);
+            nodes[index].remove(k);
+        }
+    }
+    private int getPrev(int index) {
+        Node current = nodes[index];
+        while(!current.isleaf) {
+            current = current.nodes[current.n];
+        }
+        return current.keys[current.n-1];
+    }
+    private Field getPrevF(int index) {
+        Node current = nodes[index];
+        while(!current.isleaf) {
+            current = current.nodes[current.n];
+        }
+        return current.field[current.n-1];
+    }
+    private int getSucc(int index) {
+        Node current = nodes[index+1];
+        while(!current.isleaf) {
+            current = current.nodes[0];
+        }
+        return current.keys[0];
+    }
+    private Field getSuccF(int index) {
+        Node current = nodes[index+1];
+        while(!current.isleaf) {
+            current = current.nodes[0];
+        }
+        return current.field[0];
+    }
+    private void fill(int index) {
+        if(index != 0 && nodes[index-1].n >= t)
+            borrowPrev(index);
+        else if (index != n && nodes[index+1].n >= t)
+            borrowNext(index);
+        else {
+            if(index != n)
+                merge(index);
+            else
+                merge(index-1);
+        }
+    }
+    private void borrowPrev(int index) {
+        Node child = nodes[index];
+        Node sibling = nodes[index-1];
+        for(int i = child.n-1;i >= 0;i--) {
+            child.keys[i + 1] = child.keys[i];
+            child.field[i+1] = child.field[i];
+        }
+        if(!child.isleaf) {
+            for(int i = child.n;i >= 0;i--)
+                child.nodes[i+1] = child.nodes[i];
+        }
+        child.keys[0] = keys[index-1];
+        child.field[0] = field[index-1];
+        if(!isleaf)
+            child.nodes[0] = sibling.nodes[sibling.n];
+        keys[index-1] = sibling.keys[sibling.n-1];
+        field[index-1] = sibling.field[sibling.n-1];
+        child.n += 1;
+        sibling.n -= 1;
+    }
+    private void borrowNext(int index) {
+        Node child = nodes[index];
+        Node sibling = nodes[index+1];
+        child.keys[child.n] = keys[index];
+        child.field[child.n] = field[index];
+        if(!child.isleaf)
+            child.nodes[child.n+1] = sibling.nodes[0];
+        keys[index] = sibling.keys[0];
+        field[index] = sibling.field[0];
+        for(int i = 1;i < sibling.n;i++) {
+            sibling.keys[i - 1] = sibling.keys[i];
+            sibling.field[i-1] = sibling.field[i];
+        }
+        if(!sibling.isleaf) {
+            for(int i = 0;i <= sibling.n;i++)
+                sibling.nodes[i-1] = sibling.nodes[i];
+        }
+        child.n += 1;
+        sibling.n -= 1;
+    }
+    private void merge(int index) {
+        Node child = nodes[index];
+        Node sibling = nodes[index+1];
+        child.keys[t-1] = keys[index];
+        child.field[t-1] = field[index];
+        System.arraycopy(sibling.keys, 0, child.keys, t, sibling.n);
+        System.arraycopy(sibling.field, 0, child.field, t, sibling.n);
+        if(!child.isleaf) {
+            for(int i = 0;i <= sibling.n;i++)
+                child.nodes[i+t] = sibling.nodes[i];
+        }
+        for(int i = index+1;i < n;i++) {
+            keys[i - 1] = keys[i];
+            field[i - 1] = field[i];
+        }
+        for(int i = index+2;i <= n;i++)
+            nodes[i-1] = nodes[i];
+        child.n += sibling.n+1;
+        n--;
+    }
+
     public Node searchNodeR (Node root, int key)
     {
         int i = 0;

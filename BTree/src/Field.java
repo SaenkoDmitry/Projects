@@ -15,6 +15,14 @@ public class Field {
         this.date = date;
         this.description = description;
     }
+    void print()
+    {
+        System.out.println("|*\n name : " + name + "; date : " + date + "; description : ");
+        for (int i = 0; i < description.size(); i++) {
+            System.out.println(description.get(i).string);
+        }
+        System.out.println(" *|\n");
+    }
     String getPassword()
     {
         return date;

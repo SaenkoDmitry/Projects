@@ -21,8 +21,11 @@ public class Tree {
         if(root != null)
         {
             System.out.println();
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("BTree : ");
             root.print_by_width();
             System.out.println();
+            System.out.println("-----------------------------------------------------------");
         }
     }
 
@@ -34,8 +37,17 @@ public class Tree {
             return root.searchNode(root, key);
     }
 
-    public void delete(int key)
-    {
-        root.deleteNode(key);
+    public void remove(int x) {
+        if(root == null) {
+            System.out.println("Nothing to remove, the tree is empty");
+        }
+        root.remove(x);
+        if(root.n == 0) {
+            Node temp = root;
+            if(root.isleaf)
+                root = null;
+            else
+                root = root.nodes[0];
+        }
     }
 }
