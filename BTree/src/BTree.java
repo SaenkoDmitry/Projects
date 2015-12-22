@@ -63,7 +63,7 @@ public class BTree extends Application {
         T.insert(50);*/
         T.print();
         int size = 50;
-        HashTable H = new HashTable(size);
+        HashTable H = new HashTable(size, 5);
         //System.out.println(gsonPretty.toJson(jsonObject));
         for (int i = 0; i < jsonObject.length; i++) {
             DataItem data = new DataItem(jsonObject[i].name.hashCode(), jsonObject[i]);

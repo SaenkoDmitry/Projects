@@ -26,17 +26,17 @@ SingleRoom::SingleRoom(int avai, string date, int num, int r)
 	rate = r;
 }
 
-int SingleRoom::getType(int number)
+int SingleRoom::getType()
 {
 	return 1;
 }
 
-int SingleRoom::getNumberOfGuest(int number)
+int SingleRoom::getNumberOfGuest()
 {
 	return 1;
 }
 
-int SingleRoom::getNumberOfBeds(int number)
+int SingleRoom::getNumberOfBeds()
 {
 	return 1;
 }
@@ -57,6 +57,25 @@ void SingleRoom::getInformation(int number)
 		cout << "Номер свободен" << endl;
 		cout << "Суточный тариф равен : " << rate << endl;
 	}
+}
+
+void SingleRoom::printFile(FILE *file, int number)
+{
+	char s[100];
+	_itoa_s(getType(), s, 10);
+	fprintf(file, s);
+	fprintf(file, " ");
+	_itoa_s(number, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(getAvailability(), s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	fprintf(file, dateOfReg.c_str());
+	_itoa_s(numberOfDays, s, 10);
+	fprintf(file, s);
+	_itoa_s(rate, s, 10);
+	fprintf(file, s);
 }
 
 void SingleRoom::takeRoom(string date, int number)

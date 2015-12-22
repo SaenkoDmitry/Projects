@@ -5,11 +5,13 @@ public class HashTable {
     private DataItem[] hashArray;
     private int arraySize;
     DataItem nonItem;
-    public HashTable(int size)
+    private int numTry;
+    public HashTable(int size, int numTry)
     {
         arraySize = size;
         hashArray = new DataItem[arraySize];
         nonItem = new DataItem(-1, null);
+        this.numTry = numTry;
     }
     public int hashFunc(int key)
     {
@@ -27,11 +29,22 @@ public class HashTable {
     {
         int key = item.getKey();
         int hashVal = hashFunc(key);
+        int i = 0;
         while(hashArray[hashVal] != null &&
                 hashArray[hashVal].getKey() != -1)
         {
             ++hashVal;
             hashVal %= arraySize;
+            i++;
+            if(i == numTry)
+            {
+                numTry *= 2;
+                DataItem[] hashArray2 = new DataItem[arraySize * 2];
+                for (int j = 0; j < arraySize; j++) {
+                    hashArray2[j] = hashArray[j];
+                }
+                hashArray = hashArray2;
+            }
         }
         hashArray[hashVal] = item;
     }

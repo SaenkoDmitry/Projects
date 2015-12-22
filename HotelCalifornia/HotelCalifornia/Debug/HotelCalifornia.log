@@ -1,17 +1,26 @@
-﻿Сборка начата 12.12.2015 2:04:32.
-     1>Проект "c:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\HotelCalifornia\HotelCalifornia.vcxproj" в узле 2 (целевые объекты Build).
+﻿Сборка начата 22.12.2015 23:42:47.
+     1>Проект "C:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\HotelCalifornia\HotelCalifornia.vcxproj" в узле 2 (целевые объекты Build).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\HotelCalifornia.pch" /Fo"Debug\\" /Fd"Debug\HotelCalifornia.pdb" /Gd /TP /analyze- /errorReport:prompt MultiRoom.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\HotelCalifornia.pch" /Fo"Debug\\" /Fd"Debug\HotelCalifornia.pdb" /Gd /TP /analyze- /errorReport:prompt Lux.cpp MultiRoom.cpp SingleRoom.cpp
+         SingleRoom.cpp
          MultiRoom.cpp
+         Lux.cpp
+         Создание кода...
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"c:\users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\Debug\HotelCalifornia.lib" /NOLOGO Debug\Lux.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"C:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\Debug\HotelCalifornia.lib" /NOLOGO Debug\HotelCalifornia.res
+         Debug\App.obj
+         Debug\iter.obj
+         Debug\Lux.obj
+         Debug\map1.obj
+         Debug\map_node.obj
          Debug\MultiRoom.obj
          Debug\Room.obj
          Debug\SingleRoom.obj
          Debug\stdafx.obj
-         HotelCalifornia.vcxproj -> c:\users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\Debug\HotelCalifornia.lib
-     1>Сборка проекта "c:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\HotelCalifornia\HotelCalifornia.vcxproj" завершена (целевые объекты Build).
+     1>LINK : warning LNK4068: ярЁрьхЄЁ /MACHINE эх єърчрэ; яЁшэшьрхЄё  яю єьюыўрэш■ эр X86
+         HotelCalifornia.vcxproj -> C:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\Debug\HotelCalifornia.lib
+     1>Сборка проекта "C:\Users\dima0\documents\visual studio 2015\Projects\HotelCalifornia\HotelCalifornia\HotelCalifornia.vcxproj" завершена (целевые объекты Build).
 
 Сборка успешно завершена.
 
-Затраченное время: 00:00:00.91
+Затраченное время: 00:00:01.39

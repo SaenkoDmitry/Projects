@@ -71,6 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext\csv;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext\csv;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -89,11 +91,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext\csv;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src\jsoncons_ext\csv;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master\src;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\jsoncons-master;C:\Users\dima0\Documents\Visual Studio 2015\Projects\HotelCalifornia\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>HotelCalifornia.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -161,7 +164,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\protobuf.2.5.0.0\build\native\protobuf.targets" Condition="Exists('..\packages\protobuf.2.5.0.0\build\native\protobuf.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\protobuf.2.5.0.0\build\native\protobuf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\protobuf.2.5.0.0\build\native\protobuf.targets'))" />
+  </Target>
 </Project>

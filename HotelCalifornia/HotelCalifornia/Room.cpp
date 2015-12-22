@@ -6,7 +6,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-int Room::getAvailability(int number) const
+int Room::getAvailability() const
 {
 	return availability;
 }

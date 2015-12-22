@@ -12,17 +12,17 @@ Lux::Lux()
 	numberOfGuests = 0;
 }
 
-int Lux::getType(int number)
+int Lux::getType()
 {
 	return 3;
 }
 
-int Lux::getNumberOfGuest(int number)
+int Lux::getNumberOfGuest()
 {
 	return numberOfGuests;
 }
 
-int Lux::getNumberOfBeds(int number)
+int Lux::getNumberOfBeds()
 {
 	return 2;
 }
@@ -45,6 +45,32 @@ void Lux::getInformation(int number)
 		cout << "Номер свободен" << endl;
 		cout << "Суточный тариф равен : " << rate << endl;
 	}
+}
+
+void Lux::printFile(FILE* file, int number)
+{
+	char s[100];
+	_itoa_s(getType(), s, 10);
+	fprintf(file, s);
+	fprintf(file, " ");
+	_itoa_s(number, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(getAvailability(), s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	fprintf(file, dateOfReg.c_str());
+	_itoa_s(numberOfGuests, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(numberOfRooms, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(numberOfDays, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(rate, s, 10);
+	fprintf(file, s);
 }
 
 void Lux::takeRoom(string date, int number)

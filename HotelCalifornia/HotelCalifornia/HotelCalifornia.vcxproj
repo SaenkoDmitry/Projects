@@ -136,15 +136,24 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="iter.h" />
     <ClInclude Include="Lux.h" />
+    <ClInclude Include="map1.h" />
+    <ClInclude Include="map_node.h" />
     <ClInclude Include="MultiRoom.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="SingleRoom.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="iter.cpp" />
     <ClCompile Include="Lux.cpp" />
+    <ClCompile Include="map1.cpp" />
+    <ClCompile Include="map_node.cpp" />
     <ClCompile Include="MultiRoom.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="SingleRoom.cpp" />
@@ -154,6 +163,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HotelCalifornia.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

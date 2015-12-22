@@ -29,17 +29,17 @@ MultiRoom::MultiRoom(int avai, int numberOfBeds, int numberOfBusy, string date[]
 	rate = r;
 }
 
-int MultiRoom::getType(int number)
+int MultiRoom::getType()
 {
 	return 2;
 }
 
-int MultiRoom::getNumberOfGuest(int number)
+int MultiRoom::getNumberOfGuest()
 {
 	return numberOfBusy;
 }
 
-int MultiRoom::getNumberOfBeds(int number)
+int MultiRoom::getNumberOfBeds()
 {
 	return numberOfBeds;
 }
@@ -65,6 +65,29 @@ void MultiRoom::getInformation(int number)
 	}
 	else
 		cout << "Суточный тариф равен : " << rate << endl;
+}
+
+void MultiRoom::printFile(FILE* file, int number)
+{
+	char s[100];
+	_itoa_s(getType(), s, 10);
+	fprintf(file, s);
+	fprintf(file, " ");
+	_itoa_s(number, s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	_itoa_s(getAvailability(), s, 10);
+	fprintf(file, s);
+	fprintf(file, "\n");
+	for (int i = 0; i < numberOfBusy; i++)
+	{
+		fprintf(file, dateOfReg[i].c_str());
+		_itoa_s(numberOfBusy, s, 10);
+		fprintf(file, s);
+		fprintf(file, "\n");
+	}
+	_itoa_s(rate, s, 10);
+	fprintf(file, s);
 }
 
 void MultiRoom::takeRoom(string date, int number)
@@ -104,7 +127,7 @@ void MultiRoom::leaveRoom()
 //		}
 //		numberOfBusy--;
 //	}
-//}
+//}f
 
 MultiRoom::~MultiRoom()
 {
